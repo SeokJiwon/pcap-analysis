@@ -14,8 +14,8 @@ void printTCP(ListHeader plist);
 void printUDP(ListHeader plist);
 
 void usage() {
-    printf("syntax: pcap-test <pcapfile>\n");
-    printf("sample: pcap-test file.pcap0\n");
+    printf("syntax: pcap-analysis <pcapfile>\n");
+    printf("sample: pcap-analysis file.pcap\n");
 }
 
 int main(int argc, char* argv[]) {
@@ -109,7 +109,7 @@ void TCP_analysis(const u_char* packet, ListHeader *tlist){
         temp->portA=tcp->th_sport;
         temp->portB=tcp->th_dport;
         temp->packets=1;
-        temp->bytesAtoB=ntohs(ip->ip_len)+14;
+        temp->bytesAtoB=ntohs(ip->ip_len)+eth_len;
         temp->bytes=temp->bytesAtoB;
         temp->packetsAtoB=1;
         temp->bytesBtoA=0;
@@ -164,7 +164,7 @@ void UDP_analysis(const u_char* packet, ListHeader *ulist){
         temp->portA=udp->udp_sport;
         temp->portB=udp->udp_dport;
         temp->packets=1;
-        temp->bytesAtoB=ntohs(ip->ip_len)+14;
+        temp->bytesAtoB=ntohs(ip->ip_len)+eth_len;
         temp->bytes=temp->bytesAtoB;
         temp->packetsAtoB=1;
         temp->bytesBtoA=0;
